@@ -1,5 +1,5 @@
-# Group#:
-# Student Names:
+# Group#: 
+# Student Names: Cullen Jamieson, Sanskar Soni
 
 """
     This program implements a variety of the snake 
