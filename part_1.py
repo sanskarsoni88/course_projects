@@ -175,6 +175,17 @@ class Game():
         """
         lastX, lastY = self.snakeCoordinates[-1]
         #complete the method implementation below
+        spacing = 10
+        if self.direction == "Left":
+            lastX = lastX-10
+        elif self.direction == "Right":
+            lastX = lastX+10
+        elif self.driection == "Up":
+            lastY = lastY+10
+        else:
+            lastY = lastY-10
+        
+        return (lastX,lastY)
 
 
     def isGameOver(self, snakeCoordinates) -> None:
