@@ -149,6 +149,7 @@ class Game():
             currentDirection == "Down" and e.keysym == "Up"):
             return
         self.direction = e.keysym
+        # print(self.direction) # Testing
 
     def move(self) -> None:
         """ 
