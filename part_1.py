@@ -129,7 +129,7 @@ class Game():
         SPEED = 0.15     #speed of snake updates (sec)
         while self.gameNotOver:
             time.sleep(SPEED)
-            Move= {"move" : self.snakeCoordinates } 
+            Move = {"move" : self.snakeCoordinates } 
             gameQueue.put(Move)
             self.move()
 
@@ -165,7 +165,7 @@ class Game():
         """
         NewSnakeCoordinates = self.calculateNewCoordinates()
         #complete the method implementation below
-        if NewSnakeCoordinates[0]==self.preyCoordinates:
+        if NewSnakeCoordinates[-1] == self.preyCoordinates:
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
@@ -173,8 +173,6 @@ class Game():
         else:
             self.isGameOver(NewSnakeCoordinates)
         self.snakeCoordinates = NewSnakeCoordinates      
-
-
 
 
     def calculateNewCoordinates(self) -> tuple:
