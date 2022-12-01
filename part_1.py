@@ -233,8 +233,8 @@ class Game():
         THRESHOLD = 15   #sets how close prey can be to borders
         #complete the method implementation below
 
-        x = random.randint(0 + THRESHOLD, 300 - THRESHOLD)
-        y = random.randint(0 + THRESHOLD, 500 - THRESHOLD)
+        x = random.randint(0 + THRESHOLD, 500 - THRESHOLD)
+        y = random.randint(0 + THRESHOLD, 300 - THRESHOLD)
         self.preyCoordinates==(x,y)
 
         rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
