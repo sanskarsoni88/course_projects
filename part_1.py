@@ -129,7 +129,7 @@ class Game():
         SPEED = 0.15     #speed of snake updates (sec)
         while self.gameNotOver:
             time.sleep(SPEED)
-            Move= {"move" : self.snakeCoordinates } 
+            Move = {"move" : self.snakeCoordinates } 
             gameQueue.put(Move)
             self.move()
 
@@ -165,8 +165,7 @@ class Game():
         """
         NewSnakeCoordinates = self.calculateNewCoordinates()
         #complete the method implementation below
-        self.snakeCoordinates.append(NewSnakeCoordinates)
-        if NewSnakeCoordinates==self.preyCoordinates:#prey eaten
+        if NewSnakeCoordinates[-1]==self.preyCoordinates:
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
@@ -175,7 +174,6 @@ class Game():
             self.isGameOver(NewSnakeCoordinates)
             self.snakeCoordinates = self.snakeCoordinates[1:]
            
-
 
 
 
@@ -190,17 +188,18 @@ class Game():
         """
         lastX, lastY = self.snakeCoordinates[-1]
         #complete the method implementation below
-        spacing = 10
+        spacing = 10 # Spacing between blocks
         if self.direction == "Left":
-            lastX = lastX-spacing
+            newX = lastX - spacing
         elif self.direction == "Right":
-            lastX = lastX+spacing
-        elif self.driection == "Up":
-            lastY = lastY+spacing
+            newX = lastX + spacing
+        elif self.direction == "Up":
+            newY = lastY + spacing
         else:
-            lastY = lastY-spacing
+            newY = lastY - spacing
         
-        return (lastX,lastY)
+        result = (newX, newY)
+        return result
 
 
     def isGameOver(self, snakeCoordinates) -> None:
@@ -216,7 +215,7 @@ class Game():
 
         # If x or y hits a window boundary, the game is over
         # If (x1,y1) = is in any of the set of coordinates then the game is over
-        if x[-1] == 0 or x[-1] == WINDOW_WIDTH or y[-1] == 0 or y[-1] == WINDOW_HEIGHT or (x[-1] in x[:-2] and y[-1] in y[:-2]): #check again
+        if x[0] == 0 or x[0] == WINDOW_WIDTH or y[0] == 0 or y[0] == WINDOW_HEIGHT or (x[0] in x[1:] and y[0] in y[1:]):
             Game.gameNotOver = False # Update the field
             game_over = {"game_over" : False} # Create the dictionary task
             gameQueue.put(game_over) # Add the task to the queue
