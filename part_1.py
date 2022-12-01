@@ -165,15 +165,16 @@ class Game():
             and position) should be correctly updated.
         """
         NewSnakeCoordinates = self.calculateNewCoordinates()
+        self.snakeCoordinates.append(NewSnakeCoordinates)
         #complete the method implementation below
-        if NewSnakeCoordinates[-1]==self.preyCoordinates:
+        if NewSnakeCoordinates==self.preyCoordinates:
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
             self.createNewPrey()
         else:
-            self.isGameOver(NewSnakeCoordinates)
             self.snakeCoordinates = self.snakeCoordinates[1:]
+            self.isGameOver(self.snakeCoordinates)
            
 
 
