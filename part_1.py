@@ -215,7 +215,7 @@ class Game():
         # If (x1,y1) = is in any of the set of coordinates then the game is over
         if x[0] == 0 or x[0] == WINDOW_WIDTH or y[0] == 0 or y[0] == WINDOW_HEIGHT or (x[0] in x[1:] and y[0] in y[1:]):
             Game.gameNotOver = False # Update the field
-            game_over = {"Game_over" : False} # Create the dictionary task
+            game_over = {"game_over" : False} # Create the dictionary task
             gameQueue.put(game_over) # Add the task to the queue
 
 
@@ -238,7 +238,7 @@ class Game():
         self.preyCoordinates==(x,y)
 
         rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
-        prey = {"Prey" : rectangleCoordinates}
+        prey = {"prey" : rectangleCoordinates}
         gameQueue.put(prey)
 
 
