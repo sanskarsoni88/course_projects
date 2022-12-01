@@ -188,15 +188,16 @@ class Game():
         #complete the method implementation below
         spacing = 10 # Spacing between blocks
         if self.direction == "Left":
-            lastX = lastX - spacing
+            newX = lastX - spacing
         elif self.direction == "Right":
-            lastX = lastX + spacing
+            newX = lastX + spacing
         elif self.direction == "Up":
-            lastY = lastY + spacing
+            newY = lastY + spacing
         else:
-            lastY = lastY - spacing
+            newY = lastY - spacing
         
-        return (lastX,lastY)
+        result = (newX, newY)
+        return result
 
 
     def isGameOver(self, snakeCoordinates) -> None:
