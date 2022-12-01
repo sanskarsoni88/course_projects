@@ -189,7 +189,7 @@ class Game():
         #complete the method implementation below
         spacing = 10
         if self.direction == "Left":
-            lastX = lastX-10
+            lastX = lastX-spacing
         elif self.direction == "Right":
             lastX = lastX+10
         elif self.driection == "Up":
