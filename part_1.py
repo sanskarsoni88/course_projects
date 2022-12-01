@@ -129,6 +129,8 @@ class Game():
         SPEED = 0.15     #speed of snake updates (sec)
         while self.gameNotOver:
             time.sleep(SPEED)
+            Move= {"move" : self.snakeCoordinates } 
+            gameQueue.put(Move)
             self.move()
 
     def whenAnArrowKeyIsPressed(self, e) -> None:
@@ -163,7 +165,7 @@ class Game():
         """
         NewSnakeCoordinates = self.calculateNewCoordinates()
         #complete the method implementation below
-        if NewSnakeCoordinates[0]==self.preyCoordinates:
+        if NewSnakeCoordinates[-1]==self.preyCoordinates:
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
@@ -172,8 +174,7 @@ class Game():
             self.isGameOver(NewSnakeCoordinates)
         self.snakeCoordinates = NewSnakeCoordinates      
 
-        Move= {"move" : self.snakeCoordinates } 
-        gameQueue.put(Move)
+
 
 
     def calculateNewCoordinates(self) -> tuple:
@@ -213,7 +214,7 @@ class Game():
 
         # If x or y hits a window boundary, the game is over
         # If (x1,y1) = is in any of the set of coordinates then the game is over
-        if x[0] == 0 or x[0] == WINDOW_WIDTH or y[0] == 0 or y[0] == WINDOW_HEIGHT or (x[0] in x[1:] and y[0] in y[1:]):
+        if x[-1] == 0 or x[-1] == WINDOW_WIDTH or y[-1] == 0 or y[-1] == WINDOW_HEIGHT or (x[-1] in x[:-2] and y[-1] in y[:-2]): #check again
             Game.gameNotOver = False # Update the field
             game_over = {"game_over" : False} # Create the dictionary task
             gameQueue.put(game_over) # Add the task to the queue
