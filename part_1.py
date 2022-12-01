@@ -189,13 +189,13 @@ class Game():
         #complete the method implementation below
         spacing = 10
         if self.direction == "Left":
-            lastX = lastX- spacing
+            lastX = lastX-10
         elif self.direction == "Right":
-            lastX = lastX+ spacing
+            lastX = lastX+10
         elif self.driection == "Up":
-            lastY = lastY+ spacing
+            lastY = lastY+10
         else:
-            lastY = lastY- spacing
+            lastY = lastY-10
         
         return (lastX,lastY)
 
@@ -232,6 +232,7 @@ class Game():
         """
         THRESHOLD = 15   #sets how close prey can be to borders
         #complete the method implementation below
+
         x = random.randint(0 + THRESHOLD, 300 - THRESHOLD)
         y = random.randint(0 + THRESHOLD, 500 - THRESHOLD)
         self.preyCoordinates==(x,y)
