@@ -112,6 +112,7 @@ class Game():
         # (x, y) tuple. Initially its size is 5 tuples.       
         self.snakeCoordinates = [(495, 55), (485, 55), (475, 55),
                                  (465, 55), (455, 55)]
+        self.preyCoordinates = [0,0]
         #initial direction of the snake
         self.direction = "Left"
         self.gameNotOver = True
@@ -162,6 +163,17 @@ class Game():
         """
         NewSnakeCoordinates = self.calculateNewCoordinates()
         #complete the method implementation below
+        if NewSnakeCoordinates[0]==self.preyCoordinates:
+            self.score += 1
+            Score = {"score" : self.score}
+            gameQueue.put(Score)
+            self.createNewPrey()
+        else:
+            self.isGameOver(NewSnakeCoordinates)
+        self.snakeCoordinates = NewSnakeCoordinates      
+
+        Move= {"move" : self.snakeCoordinates } 
+        gameQueue.put(Move)
 
 
     def calculateNewCoordinates(self) -> tuple:
@@ -222,6 +234,7 @@ class Game():
         #complete the method implementation below
         x = random.randint(0 + THRESHOLD, 300 - THRESHOLD)
         y = random.randint(0 + THRESHOLD, 500 - THRESHOLD)
+        self.preyCoordinates==(x,y)
 
         rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
         prey = {"Prey" : rectangleCoordinates}
