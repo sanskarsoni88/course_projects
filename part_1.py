@@ -191,11 +191,11 @@ class Game():
         if self.direction == "Left":
             lastX = lastX-spacing
         elif self.direction == "Right":
-            lastX = lastX+10
+            lastX = lastX+spacing
         elif self.driection == "Up":
-            lastY = lastY+10
+            lastY = lastY+spacing
         else:
-            lastY = lastY-10
+            lastY = lastY-spacing
         
         return (lastX,lastY)
 
