@@ -186,15 +186,15 @@ class Game():
         """
         lastX, lastY = self.snakeCoordinates[-1]
         #complete the method implementation below
-        spacing = 10
+        spacing = 10 # Spacing between blocks
         if self.direction == "Left":
-            lastX = lastX-spacing
+            lastX = lastX - spacing
         elif self.direction == "Right":
-            lastX = lastX+spacing
-        elif self.driection == "Up":
-            lastY = lastY+spacing
+            lastX = lastX + spacing
+        elif self.direction == "Up":
+            lastY = lastY + spacing
         else:
-            lastY = lastY-spacing
+            lastY = lastY - spacing
         
         return (lastX,lastY)
 
