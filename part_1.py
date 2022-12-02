@@ -198,9 +198,9 @@ class Game():
         elif self.direction == "Right":
             newX = lastX + spacing
         elif self.direction == "Up":
-            newY = lastY + spacing
-        else:
             newY = lastY - spacing
+        else:
+            newY = lastY + spacing
         
         result = (newX, newY)
         return result
@@ -214,14 +214,16 @@ class Game():
             If that is the case, it updates the gameNotOver 
             field and also adds a "game_over" task to the queue. 
         """
-        x, y = snakeCoordinates
+        x, y = snakeCoordinates[-1] # QUESTION FOR TA: is this allowed?
         #complete the method implementation below
 
         # If x or y hits a window boundary, the game is over
         # If (x1,y1) = is in any of the set of coordinates then the game is over
-        if x[-1] == 0 or x[-1] == WINDOW_WIDTH or y[-1] == 0 or y[-1] == WINDOW_HEIGHT or (x[-1] in x[:-2] and y[-1] in y[:-2]):
+
+        # (x in snakeCoordinates[:-2] and y[-1] in y[:-2])
+        if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT:
             Game.gameNotOver = False # Update the field
-            game_over = {"game_over" : False} # Create the dictionary task
+            game_over = {"game_over" : True} # Create the dictionary task
             gameQueue.put(game_over) # Add the task to the queue
 
 
