@@ -167,7 +167,14 @@ class Game():
         NewSnakeCoordinates = self.calculateNewCoordinates()
         #complete the method implementation below
         self.snakeCoordinates.append(NewSnakeCoordinates)
-        if NewSnakeCoordinates[0] == self.preyCoordinates[0] and NewSnakeCoordinates[1] == self.preyCoordinates[1]:
+
+        # Testing
+        headX = NewSnakeCoordinates[0]
+        preyX = self.preyCoordinates[0]
+        headY = NewSnakeCoordinates[1]
+        preyY = self.preyCoordinates[1]
+
+        if preyX - 5 < headX < preyX + 5 and preyY - 5 < headY < preyY + 5:
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
