@@ -241,7 +241,7 @@ class Game():
 
         x = random.randint(0 + THRESHOLD, 500 - THRESHOLD)
         y = random.randint(0 + THRESHOLD, 300 - THRESHOLD)
-        self.preyCoordinates==(x,y)
+        self.preyCoordinates=[x,y]
 
         rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
         prey = {"prey" : rectangleCoordinates}
