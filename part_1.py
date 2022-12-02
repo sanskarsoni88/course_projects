@@ -18,7 +18,7 @@ class Gui():
         This class takes care of the game's graphic user interface (gui)
         creation and termination.
     """
-    def __init__(self, queue, game):
+    def __init__(self, queue, game):                                                                        # QUESTION FOR TA
         """        
             The initializer instantiates the main window and 
             creates the starting icons for the snake and the prey,
@@ -112,7 +112,7 @@ class Game():
         # (x, y) tuple. Initially its size is 5 tuples.       
         self.snakeCoordinates = [(495, 55), (485, 55), (475, 55),
                                  (465, 55), (455, 55)]
-        self.preyCoordinates = [0,0]
+        self.preyCoordinates = [0,0]                                                          # QUESTION FOR TA
         #initial direction of the snake
         self.direction = "Left"
         self.gameNotOver = True
@@ -221,17 +221,29 @@ class Game():
             If that is the case, it updates the gameNotOver 
             field and also adds a "game_over" task to the queue. 
         """
-        x, y = snakeCoordinates[-1] # QUESTION FOR TA: is this allowed?
+        x, y = snakeCoordinates[-1]                                                                                     # QUESTION FOR TA: is this allowed?
         #complete the method implementation below
 
         # If x or y hits a window boundary, the game is over
         # If (x1,y1) = is in any of the set of coordinates then the game is over
 
-        # (x in snakeCoordinates[:-2] and y[-1] in y[:-2])
-        if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT:
+        testX: list = []
+        testY: list = []
+
+        for i in snakeCoordinates[:-2]: 
+            testX.append(i[0])
+
+        for i in snakeCoordinates[:-2]: 
+            testY.append(i[1])
+
+        if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT or (x in testX and y in testY):
             Game.gameNotOver = False # Update the field
             game_over = {"game_over" : True} # Create the dictionary task
             gameQueue.put(game_over) # Add the task to the queue
+
+        # print(testX)
+        # print()
+        # print(testY)
 
 
     def createNewPrey(self) -> None:
