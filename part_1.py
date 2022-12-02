@@ -165,9 +165,9 @@ class Game():
             and position) should be correctly updated.
         """
         NewSnakeCoordinates = self.calculateNewCoordinates()
-        self.snakeCoordinates.append(NewSnakeCoordinates)
         #complete the method implementation below
-        if NewSnakeCoordinates == self.preyCoordinates:
+        self.snakeCoordinates.append(NewSnakeCoordinates)
+        if NewSnakeCoordinates[0] == self.preyCoordinates[0] and NewSnakeCoordinates[1] == self.preyCoordinates[1]:
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
@@ -189,6 +189,8 @@ class Game():
             It is used by the move() method.    
         """
         lastX, lastY = self.snakeCoordinates[-1]
+        newX : int = lastX
+        newY : int = lastY
         #complete the method implementation below
         spacing = 10 # Spacing between blocks
         if self.direction == "Left":
