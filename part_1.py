@@ -18,7 +18,7 @@ class Gui():
         This class takes care of the game's graphic user interface (gui)
         creation and termination.
     """
-    def __init__(self, queue, game):                                                                        # QUESTION FOR TA
+    def __init__(self, queue, game):                                                                        # QUESTION #1 FOR TA
         """        
             The initializer instantiates the main window and 
             creates the starting icons for the snake and the prey,
@@ -112,7 +112,7 @@ class Game():
         # (x, y) tuple. Initially its size is 5 tuples.       
         self.snakeCoordinates = [(495, 55), (485, 55), (475, 55),
                                  (465, 55), (455, 55)]
-        self.preyCoordinates = [0,0]                                                          # QUESTION FOR TA
+        self.preyCoordinates = [0,0]                                                          # QUESTION #3 FOR TA
         #initial direction of the snake
         self.direction = "Left"
         self.gameNotOver = True
@@ -174,14 +174,14 @@ class Game():
         headY = NewSnakeCoordinates[1]
         preyY = self.preyCoordinates[1]
 
-        if preyX - 5 < headX < preyX + 5 and preyY - 5 < headY < preyY + 5:
+        if preyX - 5 < headX < preyX + 5 and preyY - 5 < headY < preyY + 5:         # Specify why the range ("needs to completely overlap") snake size = 15, prey = 10
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
             self.createNewPrey()
         else:
             self.snakeCoordinates = self.snakeCoordinates[1:]
-            self.isGameOver(self.snakeCoordinates)
+            self.isGameOver(NewSnakeCoordinates)
            
 
 
@@ -221,7 +221,7 @@ class Game():
             If that is the case, it updates the gameNotOver 
             field and also adds a "game_over" task to the queue. 
         """
-        x, y = snakeCoordinates[-1]                                                                                     # QUESTION FOR TA: is this allowed?
+        x, y = snakeCoordinates                                                                                # QUESTION #2 FOR TA: is this allowed? -> pass the new head to this method
         #complete the method implementation below
 
         # If x or y hits a window boundary, the game is over
@@ -230,14 +230,14 @@ class Game():
         testX: list = []
         testY: list = []
 
-        for i in snakeCoordinates[:-2]: 
+        for i in self.snakeCoordinates[:-2]: 
             testX.append(i[0])
 
-        for i in snakeCoordinates[:-2]: 
+        for i in self.snakeCoordinates[:-2]: 
             testY.append(i[1])
 
         if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT or (x in testX and y in testY):
-            Game.gameNotOver = False # Update the field
+            self.gameNotOver = False # Update the field
             game_over = {"game_over" : True} # Create the dictionary task
             gameQueue.put(game_over) # Add the task to the queue
 
