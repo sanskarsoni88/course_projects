@@ -198,9 +198,9 @@ class Game():
         elif self.direction == "Right":
             newX = lastX + spacing
         elif self.direction == "Up":
-            newY = lastY + spacing
-        else:
             newY = lastY - spacing
+        else:
+            newY = lastY + spacing
         
         result = (newX, newY)
         return result
@@ -241,7 +241,8 @@ class Game():
 
         x = random.randint(0 + THRESHOLD, 500 - THRESHOLD)
         y = random.randint(0 + THRESHOLD, 300 - THRESHOLD)
-        self.preyCoordinates==(x,y)
+        self.preyCoordinates[0]=x
+        self.preyCoordinates[1]=y
 
         rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
         prey = {"prey" : rectangleCoordinates}
