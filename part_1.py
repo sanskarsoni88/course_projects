@@ -46,6 +46,7 @@ class Gui():
         for key in ("Left", "Right", "Up", "Down"):
             self.root.bind(f"<Key-{key}>", game.whenAnArrowKeyIsPressed)
 
+    # I think the snake bites itself because the head coordinate gets inside the block of a body and the blocks on the grid are smaller
     def gameOver(self):
         """
             This method is used at the end to display a
@@ -174,7 +175,7 @@ class Game():
         headY = NewSnakeCoordinates[1]
         preyY = self.preyCoordinates[1]
 
-        if preyX - 5 < headX < preyX + 5 and preyY - 5 < headY < preyY + 5:         # Specify why the range ("needs to completely overlap") snake size = 15, prey = 10
+        if preyX - 5 < headX < preyX + 5 and preyY - 5 < headY < preyY + 5:         # Specify why the range ("needs to completely overlap") snake size = 15, prey = 
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
@@ -237,6 +238,7 @@ class Game():
             testY.append(i[1])
 
         if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT or (x in testX and y in testY):
+            #if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT:
             self.gameNotOver = False # Update the field
             game_over = {"game_over" : True} # Create the dictionary task
             gameQueue.put(game_over) # Add the task to the queue
