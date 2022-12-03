@@ -175,7 +175,7 @@ class Game():
         headY = NewSnakeCoordinates[1]
         preyY = self.preyCoordinates[1]
 
-        if preyX - 5 < headX < preyX + 5 and preyY - 5 < headY < preyY + 5:         # Specify why the range ("needs to completely overlap") snake size = 15, prey = 
+        if preyX - 7 < headX < preyX + 7 and preyY - 7 < headY < preyY + 7:         # Specify why the range ("needs to completely overlap") snake size = 15, prey = 10 (i think)
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
@@ -222,6 +222,7 @@ class Game():
             If that is the case, it updates the gameNotOver 
             field and also adds a "game_over" task to the queue. 
         """
+        # Why do we not use self here?
         x, y = snakeCoordinates                                                                                # QUESTION #2 FOR TA: is this allowed? -> pass the new head to this method
         #complete the method implementation below
 
@@ -231,14 +232,17 @@ class Game():
         testX: list = []
         testY: list = []
 
+        # The problem is here, I think
+            # Is the snakeCoordinates the one that we're wanting to reference? or is it the one that we're passing here in this method?
+        # Also, are the borders of the snake touching itelf anywhere perhaps?
         for i in self.snakeCoordinates[:-2]: 
             testX.append(i[0])
 
         for i in self.snakeCoordinates[:-2]: 
             testY.append(i[1])
 
+        #if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT:
         if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT or (x in testX and y in testY):
-            #if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT:
             self.gameNotOver = False # Update the field
             game_over = {"game_over" : True} # Create the dictionary task
             gameQueue.put(game_over) # Add the task to the queue
