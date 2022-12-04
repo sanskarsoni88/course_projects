@@ -235,14 +235,21 @@ class Game():
         # The problem is here, I think
             # Is the snakeCoordinates the one that we're wanting to reference? or is it the one that we're passing here in this method?
         # Also, are the borders of the snake touching itelf anywhere perhaps?
-        for i in self.snakeCoordinates[:-2]: 
-            testX.append(i[0])
+        for i in self.snakeCoordinates[:-1]: 
+            testX.append(i)
 
-        for i in self.snakeCoordinates[:-2]: 
-            testY.append(i[1])
+        # for j in self.snakeCoordinates[:-2]: 
+        #     testY.append(j[1])
 
-        #if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT:
-        if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT or (x in testX and y in testY):
+        indicator = True
+        for i in testX:
+            if x == i[0] and y == i[1]:
+                indicator = False
+
+        if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT or indicator == False:
+            print(x,y)
+            print()
+            print(testX, testY)
             self.gameNotOver = False # Update the field
             game_over = {"game_over" : True} # Create the dictionary task
             gameQueue.put(game_over) # Add the task to the queue
