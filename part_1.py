@@ -238,15 +238,18 @@ class Game():
         for i in self.snakeCoordinates[:-2]: 
             testX.append(i[0])
 
-        for i in self.snakeCoordinates[:-2]: 
-            testY.append(i[1])
+        for j in self.snakeCoordinates[:-2]: 
+            testY.append(j[1])
 
         #if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT:
         if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT or (x in testX and y in testY):
+            print(x,y)
+            print()
+            print(testX, testY)
             self.gameNotOver = False # Update the field
             game_over = {"game_over" : True} # Create the dictionary task
             gameQueue.put(game_over) # Add the task to the queue
-
+        
         # print(testX)
         # print()
         # print(testY)
