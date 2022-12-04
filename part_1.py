@@ -222,41 +222,27 @@ class Game():
             If that is the case, it updates the gameNotOver 
             field and also adds a "game_over" task to the queue. 
         """
-        # Why do we not use self here?
-        x, y = snakeCoordinates                                                                                # QUESTION #2 FOR TA: is this allowed? -> pass the new head to this method
-        #complete the method implementation below
+       
+        x, y = snakeCoordinates # Here, we are getting the new snake head coordinates                                                                            
 
-        # If x or y hits a window boundary, the game is over
-        # If (x1,y1) = is in any of the set of coordinates then the game is over
+        snakeBody: list = [] # List of coordinates not containing the head
 
-        testX: list = []
-        testY: list = []
-
-        # The problem is here, I think
-            # Is the snakeCoordinates the one that we're wanting to reference? or is it the one that we're passing here in this method?
-        # Also, are the borders of the snake touching itelf anywhere perhaps?
         for i in self.snakeCoordinates[:-1]: 
-            testX.append(i)
+            snakeBody.append(i)
 
-        # for j in self.snakeCoordinates[:-2]: 
-        #     testY.append(j[1])
+        bitesItself = False # indicates whether or not the snake head coordinates match any coordinates from the body
 
-        indicator = True
-        for i in testX:
+        for i in snakeBody:
             if x == i[0] and y == i[1]:
-                indicator = False
+                bitesItself = True
 
-        if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT or indicator == False:
-            print(x,y)
-            print()
-            print(testX, testY)
+        # The game is over when: 
+            # 1.) the snake head coordinates leave the game boundary 
+            # 2.) the snake bites itself (indicator )
+        if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT or bitesItself == True:
             self.gameNotOver = False # Update the field
             game_over = {"game_over" : True} # Create the dictionary task
             gameQueue.put(game_over) # Add the task to the queue
-
-        # print(testX)
-        # print()
-        # print(testY)
 
 
     def createNewPrey(self) -> None:
