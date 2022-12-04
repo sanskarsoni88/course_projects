@@ -226,19 +226,20 @@ class Game():
         x, y = snakeCoordinates # Here, we are getting the new snake head coordinates                                                                            
 
         snakeBody: list = [] # List of coordinates not containing the head
+        bitesItself = False # Indicates whether or not the snake head coordinates match any coordinates from the body
 
+        # Create the snake body
         for i in self.snakeCoordinates[:-1]: 
             snakeBody.append(i)
 
-        bitesItself = False # indicates whether or not the snake head coordinates match any coordinates from the body
-
+        # Check if the snake has bitten itself
         for i in snakeBody:
             if x == i[0] and y == i[1]:
                 bitesItself = True
 
         # The game is over when: 
-            # 1.) the snake head coordinates leave the game boundary 
-            # 2.) the snake bites itself (indicator )
+            # 1.) the snake head coordinates leave the game boundaries
+            # 2.) the snake bites itself
         if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT or bitesItself == True:
             self.gameNotOver = False # Update the field
             game_over = {"game_over" : True} # Create the dictionary task
