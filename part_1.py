@@ -185,7 +185,6 @@ class Game():
             self.isGameOver(NewSnakeCoordinates)
 
 
-
     def calculateNewCoordinates(self) -> tuple:
         """
             This method calculates and returns the new 
