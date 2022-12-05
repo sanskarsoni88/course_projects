@@ -127,7 +127,7 @@ class Game():
             Use the SPEED constant to set how often the move tasks
             are generated.
         """
-        SPEED = 0.1     #speed of snake updates (sec)
+        SPEED = 0.1/2     #speed of snake updates (sec)
         while self.gameNotOver:
             time.sleep(SPEED)
             Move = {"move" : self.snakeCoordinates } 
@@ -196,7 +196,7 @@ class Game():
         newX : int = lastX
         newY : int = lastY
         #complete the method implementation below
-        spacing = 10 # Spacing between blocks
+        spacing = 5 # Spacing between blocks
         if self.direction == "Left":
             newX = lastX - spacing
         elif self.direction == "Right":
