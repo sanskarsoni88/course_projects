@@ -26,20 +26,21 @@ serverName = "localhost"    #replace with actual name
 serverPort = 12000               #use an available port
 clientSocket = socket(AF_INET,  SOCK_DGRAM)
 
-message = "PING 1 - hello world"
-sendTime_ms = time.time()
+for i in range(5):
+    message = "PING {} - hello world", i
+    sendTime_ms = time.time()
 
-clientSocket.sendto(message.encode(), (serverName, serverPort))
-modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
+    clientSocket.sendto(message.encode(), (serverName, serverPort))
+    modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
 
-receiveTime_ms = time.time()
+    receiveTime_ms = time.time()
 
-RTT = round(receiveTime_ms - sendTime_ms, 1)
-print (RTT)
+    RTT = round(receiveTime_ms - sendTime_ms)
+    print (RTT)
 
-if RTT > 1000:
-    print('request timed out')
-else:
-    print (modifiedMessage.decode())
-    
-clientSocket.close()
+    if RTT > 1000:
+        print('request timed out')
+    else:
+        print(modifiedMessage.decode())
+        
+    clientSocket.close()
