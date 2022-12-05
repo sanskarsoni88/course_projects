@@ -174,7 +174,7 @@ class Game():
         headY = NewSnakeCoordinates[1]
         preyY = self.preyCoordinates[1]
 
-        if preyX - 5 <= headX <= preyX + 5 and preyY - 5 <= headY <= preyY + 5:         # Specify why the range ("needs to completely overlap") snake size = 15, prey = 10 (i think)
+        if preyX - 3.56 <= headX <= preyX + 3.56 and preyY - 3.56 <= headY <= preyY + 3.56:         # Specify why the range ("needs to completely overlap") snake size = 15, prey = 10 (i think)
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
@@ -257,8 +257,10 @@ class Game():
         THRESHOLD = 15   #sets how close prey can be to borders
         #complete the method implementation below
 
-        x = random.randint(0 + THRESHOLD, 500 - THRESHOLD)
-        y = random.randint(0 + THRESHOLD, 300 - THRESHOLD)
+        # x = random.randint(0 + THRESHOLD, ((WINDOW_WIDTH / 10) - 1) - THRESHOLD) * 10
+        # y = random.randint(0 + THRESHOLD, ((WINDOW_HEIGHT / 10) - 1) - THRESHOLD) * 10
+        x = random.randint(0, ((WINDOW_WIDTH / 10) - 1) * 10)
+        y = random.randint(0, ((WINDOW_HEIGHT / 10) - 1) * 10)
         self.preyCoordinates=[x,y]
 
         rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
