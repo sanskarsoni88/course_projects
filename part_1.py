@@ -169,7 +169,6 @@ class Game():
         #complete the method implementation below
         self.snakeCoordinates.append(NewSnakeCoordinates)
 
-        # Testing
         headX = NewSnakeCoordinates[0]
         preyX = self.preyCoordinates[0]
         headY = NewSnakeCoordinates[1]
