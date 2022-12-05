@@ -175,7 +175,7 @@ class Game():
         headY = NewSnakeCoordinates[1]
         preyY = self.preyCoordinates[1]
 
-        if preyX - 5 < headX < preyX + 5 and preyY - 5 < headY < preyY + 5:         # Specify why the range ("needs to completely overlap") snake size = 15, prey = 10 (i think)
+        if preyX - 5 <= headX <= preyX + 5 and preyY - 5 <= headY <= preyY + 5:         # Specify why the range ("needs to completely overlap") snake size = 15, prey = 10 (i think)
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
@@ -183,7 +183,6 @@ class Game():
         else:
             self.snakeCoordinates = self.snakeCoordinates[1:]
             self.isGameOver(NewSnakeCoordinates)
-           
 
 
 
@@ -265,6 +264,7 @@ class Game():
         self.preyCoordinates=[x,y]
 
         rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
+        print(rectangleCoordinates) # Testing
         prey = {"prey" : rectangleCoordinates}
         gameQueue.put(prey)
 
