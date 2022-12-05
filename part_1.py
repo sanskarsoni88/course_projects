@@ -196,7 +196,7 @@ class Game():
         newX : int = lastX
         newY : int = lastY
         #complete the method implementation below
-        spacing = 5 # Spacing between blocks
+        spacing = 10 # Spacing between blocks
         if self.direction == "Left":
             newX = lastX - spacing
         elif self.direction == "Right":
