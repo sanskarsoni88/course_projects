@@ -20,15 +20,27 @@ To implement variable delay and loss and calculating the delay, use the methods 
 """
 
 import random, time
-
 from socket import *
-serverName = "hostname"    #replace with actual name
+
+serverName = "localhost"    #replace with actual name
 serverPort = 12000               #use an available port
 clientSocket = socket(AF_INET,  SOCK_DGRAM)
 
-message = input("Input lowercase sentence:")
-clientSocket.sendto(message.encode(), (serverName, serverPort))
+for i in range(5):
+    message = "PING {} - hello world", i
+    sendTime_ms = time.time()
 
-modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
-print (modifiedMessage.decode())
-clientSocket.close()
+    clientSocket.sendto(message.encode(), (serverName, serverPort))
+    modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
+
+    receiveTime_ms = time.time()
+
+    RTT = round(receiveTime_ms - sendTime_ms)
+    print (RTT)
+
+    if RTT > 1000:
+        print('request timed out')
+    else:
+        print(modifiedMessage.decode())
+        
+    clientSocket.close()
