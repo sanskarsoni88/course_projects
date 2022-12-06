@@ -127,7 +127,7 @@ class Game():
             Use the SPEED constant to set how often the move tasks
             are generated.
         """
-        SPEED = 0.1/2     #speed of snake updates (sec)
+        SPEED = 0.2     #speed of snake updates (sec)
         while self.gameNotOver:
             time.sleep(SPEED)
             Move = {"move" : self.snakeCoordinates } 
@@ -175,6 +175,7 @@ class Game():
         preyY = self.preyCoordinates[1]
 
         if -2.5 <= headX - preyX <= 2.5 and -2.5 <= headY - preyY <= 2.5: # Specify why the range ("needs to completely overlap") snake size = 15, prey = 10 (i think)
+            # if preyX - 5 <= headX <= preyX + 5 and preyY - 5 <= headY  <= preyY + 5:
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
@@ -196,7 +197,7 @@ class Game():
         newX : int = lastX
         newY : int = lastY
         #complete the method implementation below
-        spacing = 5 # Spacing between blocks
+        spacing = 15 # Spacing between blocks
         if self.direction == "Left":
             newX = lastX - spacing
         elif self.direction == "Right":
@@ -256,9 +257,11 @@ class Game():
         THRESHOLD = 15   #sets how close prey can be to borders
         #complete the method implementation below
 
+        # x = random.randrange(0 + THRESHOLD, WINDOW_WIDTH - THRESHOLD, 5)
+        # y = random.randrange(0 + THRESHOLD, WINDOW_HEIGHT - THRESHOLD, 5)
         x = random.randint(0 + THRESHOLD, WINDOW_WIDTH - THRESHOLD)
         y = random.randint(0 + THRESHOLD, WINDOW_HEIGHT - THRESHOLD)
-        self.preyCoordinates=[x,y]
+        self.preyCoordinates = [x,y]
 
         rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
         print(rectangleCoordinates) # Testing
