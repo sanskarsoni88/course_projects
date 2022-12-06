@@ -22,29 +22,29 @@ To implement variable delay and loss and calculating the delay, use the methods 
 import time
 from socket import *
 
-serverName = "localhost"    #replace with actual name
+serverName = '127.0.0.1'    #replace with actual name
 serverPort = 12000               #use an available port
-clientSocket = socket(AF_INET,  SOCK_DGRAM)
+clientSocket = socket(AF_INET, SOCK_DGRAM)
 
 for i in range(5):
-    
-    clientSocket.timeout(1.0) # Set the maximum delay to be 1 second
 
     message = f"PING {i} - hello world"
-    sendTime_ms = time.time()
+    sendTime = time.time()
 
     clientSocket.sendto(message.encode(), (serverName, serverPort))
+
+    clientSocket.settimeout(1) # Set the maximum delay to be 1 second
 
     try:
         modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
 
-        receiveTime_ms = time.time()
+        receiveTime = time.time()
 
-        RTT = round(receiveTime_ms - sendTime_ms)
-
+        RTT = 1000 * round(receiveTime - sendTime, 3)
+        print(f'{RTT} ms')
         print(modifiedMessage.decode())
 
-    except:
+    except timeout: 
         print('request timed out')
             
 clientSocket.close()
