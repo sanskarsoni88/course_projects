@@ -19,7 +19,7 @@ The client then repeats the above 4 more times (that is, we send 5 ping messages
 To implement variable delay and loss and calculating the delay, use the methods in the random module (to create random variables) and time module (for timing related functionalities) in Python.
 """
 
-import random, time
+import time
 from socket import *
 
 serverName = "localhost"    #replace with actual name
@@ -27,20 +27,24 @@ serverPort = 12000               #use an available port
 clientSocket = socket(AF_INET,  SOCK_DGRAM)
 
 for i in range(5):
-    message = "PING {} - hello world", i
+    
+    clientSocket.timeout(1.0) # Set the maximum delay to be 1 second
+
+    message = f"PING {i} - hello world"
     sendTime_ms = time.time()
 
     clientSocket.sendto(message.encode(), (serverName, serverPort))
-    modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
 
-    receiveTime_ms = time.time()
+    try:
+        modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
 
-    RTT = round(receiveTime_ms - sendTime_ms)
-    print (RTT)
+        receiveTime_ms = time.time()
 
-    if RTT > 1000:
-        print('request timed out')
-    else:
+        RTT = round(receiveTime_ms - sendTime_ms)
+
         print(modifiedMessage.decode())
-        
-    clientSocket.close()
+
+    except:
+        print('request timed out')
+            
+clientSocket.close()
