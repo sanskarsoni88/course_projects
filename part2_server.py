@@ -19,13 +19,22 @@ To implement variable delay and loss and calculating the delay, use the methods 
 """
 
 from socket import *
+from random import randint
+from time import sleep
 serverPort = 12000
 serverSocket = socket(AF_INET, SOCK_DGRAM)
 serverSocket.bind(('', serverPort))
 
-print ("The server is ready to receive")
-while True:
+x=0
+while x<5:
     message, clientAddress = serverSocket.recvfrom(2048)
-    modifiedMessage = message.decode().upper()
-    serverSocket.sendto(modifiedMessage.encode(),clientAddress) 
+    x += 1
+    #random_delay = randint(5, 50)/1000
+    sleep(randint(5, 50)/1000)
+    random_probablity = randint(1,10)
+    if random_probablity == 1:
+        break
+    else:
+        modifiedMessage = f"Ping {x} - ditto"
+        serverSocket.sendto(modifiedMessage.encode(),clientAddress) 
     
