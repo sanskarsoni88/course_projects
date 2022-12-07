@@ -40,7 +40,6 @@ class Gui():
         for key in ("Left", "Right", "Up", "Down"):
             self.root.bind(f"<Key-{key}>", game.whenAnArrowKeyIsPressed)
 
-    # I think the snake bites itself because the head coordinate gets inside the block of a body and the blocks on the grid are smaller
     def gameOver(self):
         """
             This method is used at the end to display a
@@ -170,13 +169,13 @@ class Game():
         preyY : int = self.preyCoordinates[1]          #y coordinate of the center of the prey
 
         if -2.5 <= headX - preyX <= 2.5 and -2.5 <= headY - preyY <= 2.5:      #prey is eaten if both x and y of the center of the prey are within +/- 2.5 (2.5 included) of the center of the head of the snake
-            self.score += 1                    #prey eaten so increase score
-            Score = {"score" : self.score}     #create a dictionary with key "score" 
-            gameQueue.put(Score)               #add task "score" to queue
-            self.createNewPrey()               #new prey needs to be created
+            self.score += 1                            #prey eaten so increase score
+            Score = {"score" : self.score}             #create a dictionary with key "score" 
+            gameQueue.put(Score)                       #add task "score" to queue
+            self.createNewPrey()                       #new prey needs to be created
         else:
-            self.snakeCoordinates = self.snakeCoordinates[1:] #prey not eaten so the first coordinate from the tail end of the snake needs to be removed from self.snakeCoordinates
-            self.isGameOver(NewSnakeCoordinates)              #check if game is over
+            self.snakeCoordinates = self.snakeCoordinates[1:]                  #prey not eaten so the first coordinate from the tail end of the snake needs to be removed from self.snakeCoordinates
+            self.isGameOver(NewSnakeCoordinates)                               #check if game is over
 
     def calculateNewCoordinates(self) -> tuple:
         """
@@ -187,12 +186,11 @@ class Game():
             head of the snake.
             It is used by the move() method.    
         """
-        lastX, lastY = self.snakeCoordinates[-1]           #lastX and lastY are the x and y coordinates of the center of the head of the snake respectively
+        lastX, lastY = self.snakeCoordinates[-1]       #lastX and lastY are the x and y coordinates of the center of the head of the snake respectively
         #complete the method implementation below
-
         #new variables created for readability
-        newX : int = lastX                       #represents the new x coordinate of the head of the snake after move         
-        newY : int = lastY                       #represents the new y coordinate of the head of the snake after move 
+        newX : int = lastX                             #represents the new x coordinate of the head of the snake after move         
+        newY : int = lastY                             #represents the new y coordinate of the head of the snake after move 
 
         spacing = 10 # Spacing between blocks
 
@@ -217,7 +215,6 @@ class Game():
             If that is the case, it updates the gameNotOver 
             field and also adds a "game_over" task to the queue. 
         """
-       
         x, y = snakeCoordinates # Here, we are getting the coordinates of the snake head                                                                             
         #complete the method implementation below
 
