@@ -1,11 +1,5 @@
 # Group#: G12
 # Student Names: Cullen Jamieson, Sanskar Soni
-# Testing 123
-
-"""
-    This program implements a variety of the snake 
-    game (https://en.wikipedia.org/wiki/Snake_(video_game_genre))
-"""
 
 import threading
 import queue        #the thread-safe queue from Python standard library
@@ -18,7 +12,7 @@ class Gui():
         This class takes care of the game's graphic user interface (gui)
         creation and termination.
     """
-    def __init__(self, queue, game):                                                                        # QUESTION #1 FOR TA
+    def __init__(self, queue, game):                                                                        
         """        
             The initializer instantiates the main window and 
             creates the starting icons for the snake and the prey,
@@ -113,11 +107,12 @@ class Game():
         # (x, y) tuple. Initially its size is 5 tuples.       
         self.snakeCoordinates = [(495, 55), (485, 55), (475, 55),
                                  (465, 55), (455, 55)]
-        self.preyCoordinates = [0,0]                                                          # QUESTION #3 FOR TA
+        #prey's center coordinates stored as a field of Game (initially given an arbitrary number)
+        self.preyCoordinates : list = [0,0]                                                         
         #initial direction of the snake
         self.direction = "Left"
         self.gameNotOver = True
-        self.createNewPrey()
+        self.createNewPrey()     #immedeately changes self.preyCoordinates
 
     def superloop(self) -> None:
         """
@@ -127,12 +122,12 @@ class Game():
             Use the SPEED constant to set how often the move tasks
             are generated.
         """
-        SPEED = 0.2     #speed of snake updates (sec)
-        while self.gameNotOver:
-            time.sleep(SPEED)
-            Move = {"move" : self.snakeCoordinates } 
-            gameQueue.put(Move)
-            self.move()
+        SPEED = 0.15                        #seconds after which snake makes a move
+        while self.gameNotOver:             #while snake is still alive
+            time.sleep(SPEED)               #wait SPEED seconds before every move
+            Move = {"move" : self.snakeCoordinates }   #create a Move dictionary with key "move".
+            gameQueue.put(Move)                        #add task "move" to queue
+            self.move()                                #call function to generate next move of snake
 
     def whenAnArrowKeyIsPressed(self, e) -> None:
         """ 
@@ -164,23 +159,24 @@ class Game():
             The snake coordinates list (representing its length 
             and position) should be correctly updated.
         """
-        NewSnakeCoordinates = self.calculateNewCoordinates()
+        NewSnakeCoordinates = self.calculateNewCoordinates()     #gives the new coordinate to be added to the front of the snake as it moves
         #complete the method implementation below
-        self.snakeCoordinates.append(NewSnakeCoordinates)
+        self.snakeCoordinates.append(NewSnakeCoordinates)        #add new coordinate to self.snakeCoordinates
 
-        headX : int = NewSnakeCoordinates[0]
-        preyX : int = self.preyCoordinates[0]
-        headY : int = NewSnakeCoordinates[1]
-        preyY : int = self.preyCoordinates[1]
+        #values used later to check if prey has been eaten or not
+        headX : int = NewSnakeCoordinates[0]           #x coordinate of the center of the head of the snake
+        preyX : int = self.preyCoordinates[0]          #x coordinate of the center of the prey
+        headY : int = NewSnakeCoordinates[1]           #y coordinate of the center of the head of the snake
+        preyY : int = self.preyCoordinates[1]          #y coordinate of the center of the prey
 
-        if -2.5 <= headX - preyX <= 2.5 and -2.5 <= headY - preyY <= 2.5: # Specify why the range ("needs to completely overlap") snake size = 15, prey = 10 (i think)
-            self.score += 1
-            Score = {"score" : self.score}
-            gameQueue.put(Score)
-            self.createNewPrey()
+        if -2.5 <= headX - preyX <= 2.5 and -2.5 <= headY - preyY <= 2.5:      #prey is eaten if both x and y of the center of the prey are within +/- 2.5 (2.5 included) of the center of the head of the snake
+            self.score += 1                    #prey eaten so increase score
+            Score = {"score" : self.score}     #create a dictionary with key "score" 
+            gameQueue.put(Score)               #add task "score" to queue
+            self.createNewPrey()               #new prey needs to be created
         else:
-            self.snakeCoordinates = self.snakeCoordinates[1:]
-            self.isGameOver(NewSnakeCoordinates)
+            self.snakeCoordinates = self.snakeCoordinates[1:] #prey not eaten so the first coordinate from the tail end of the snake needs to be removed from self.snakeCoordinates
+            self.isGameOver(NewSnakeCoordinates)              #check if game is over
 
     def calculateNewCoordinates(self) -> tuple:
         """
@@ -191,14 +187,16 @@ class Game():
             head of the snake.
             It is used by the move() method.    
         """
-        lastX, lastY = self.snakeCoordinates[-1]
+        lastX, lastY = self.snakeCoordinates[-1]           #lastX and lastY are the x and y coordinates of the center of the head of the snake respectively
         #complete the method implementation below
 
-        newX : int = lastX
-        newY : int = lastY
+        #new variables created for readability
+        newX : int = lastX                       #represents the new x coordinate of the head of the snake after move         
+        newY : int = lastY                       #represents the new y coordinate of the head of the snake after move 
 
         spacing = 10 # Spacing between blocks
 
+        #depending on the direction, head of the snake moves 10 units in that direction
         if self.direction == "Left":
             newX = lastX - spacing
         elif self.direction == "Right":
@@ -209,7 +207,7 @@ class Game():
             newY = lastY + spacing
         
         result = (newX, newY)
-        return result
+        return result      #return new coordinates of the head of the snake
 
     def isGameOver(self, snakeCoordinates) -> None:
         """
@@ -220,13 +218,13 @@ class Game():
             field and also adds a "game_over" task to the queue. 
         """
        
-        x, y = snakeCoordinates # Here, we are getting the new snake head coordinates                                                                            
+        x, y = snakeCoordinates # Here, we are getting the coordinates of the snake head                                                                             
         #complete the method implementation below
 
         snakeBody: list = [] # List of coordinates not containing the head
         bitesItself : bool = False # Indicates whether or not the snake head coordinates match any coordinates from the body
 
-        # Create the snake body
+        # Create the snake body (without head)
         for i in self.snakeCoordinates[:-1]: 
             snakeBody.append(i)
 
@@ -240,7 +238,7 @@ class Game():
             # 2.) the snake bites itself
         if x < 0 or x > WINDOW_WIDTH or y < 0 or y > WINDOW_HEIGHT or bitesItself == True:
             self.gameNotOver = False # Update the field
-            game_over = {"game_over" : True} # Create the dictionary task
+            game_over = {"game_over" : True} # Create the dictionary task with key "game_over"
             gameQueue.put(game_over) # Add the task to the queue
 
 
@@ -258,44 +256,31 @@ class Game():
         THRESHOLD = 15 #sets how close prey can be to borders
         #complete the method implementation below
 
-        i : int = random.randint(0,2)
-        randomnessInteger : int  = random.randint(0,1)
+        #if x and y were completely random, the only way the snake can eat any prey is if the spacing used in calculateNewCoordinates is <= 6.
+        #However, this makes the GUI very laggy and it looks different from the demo video.
+        #So, instead, it was agreed upon to rather spawn prey only at x and y that can be reached by the snake.
+        #This is so that the gamer has a better GUI.
+        #This corresponds to x and y being both mutliples of 10 in their respective ranges along with a variability of +/- 2.
 
+        #generate x and y within respective ranges that are multiples of 10 or the boundary values
         x = random.randrange(THRESHOLD, WINDOW_WIDTH - THRESHOLD, 10)
         y = random.randrange(THRESHOLD, WINDOW_HEIGHT - THRESHOLD, 10)
 
-        if randomnessInteger == 1:
-            if i == 2:
-                x = x + i
-                y = y + i
-            elif i == 1:
-                x = x - i
-                y = y - i
-        elif randomnessInteger == 0:
-            if i == 1:
-                x = x + i
-                y = y + i
-            elif i == 2:
-                x = x - i
-                y = y - i
+        #i and randomnessInteger are values used to increase randomness
+        i : int = random.randint(0,2)       #value to be added/subtracted
+        randomnessInteger : int  = random.randint(0,1)   #if 0, addition of i to x and y. if 1, subtraction of i
         
-        if x < 15:
-            x = 15
+        if randomnessInteger == 0:
+                x = x + i
+                y = y + i
+        elif x != 15 and y != 15:          # don't subtract if either are 15 as least value for x and y is THRESHOLD == 15
+                x = x - i
+                y = y - i
 
-        if y < 15:
-            y = 15
-
-        # x = random.randint(0 + THRESHOLD, WINDOW_WIDTH - THRESHOLD)
-        # y = random.randint(0 + THRESHOLD, WINDOW_HEIGHT - THRESHOLD)
-        # x = random.randint(15, (WINDOW_WIDTH / 10) - 1) * 10
-        # y = random.randint(15, (WINDOW_HEIGHT / 10) - 1) * 10
-
-        self.preyCoordinates : list = [x, y]
-
-        rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
-        # print(rectangleCoordinates) # Testing
-        prey = {"prey" : rectangleCoordinates}
-        gameQueue.put(prey)
+        self.preyCoordinates = [x, y]                           #update self.preyCoordinates
+        rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)     #create rectangleCoordinates of the prey
+        prey = {"prey" : rectangleCoordinates}                  #create dictionary task with key "prey"
+        gameQueue.put(prey)                                     #add task to queue
 
 
 if __name__ == "__main__":
