@@ -175,7 +175,8 @@ class Game():
         preyY = self.preyCoordinates[1]
 
         if -2.5 <= headX - preyX <= 2.5 and -2.5 <= headY - preyY <= 2.5: # Specify why the range ("needs to completely overlap") snake size = 15, prey = 10 (i think)
-            # if preyX - 5 <= headX <= preyX + 5 and preyY - 5 <= headY  <= preyY + 5:
+            # if headX - 5 <= preyX <= headX + 5 and headY - 5 <= preyY  <= headY + 5:
+            # if headX == preyX and headY == preyY:
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
@@ -197,7 +198,7 @@ class Game():
         newX : int = lastX
         newY : int = lastY
         #complete the method implementation below
-        spacing = 15 # Spacing between blocks
+        spacing = 10 # Spacing between blocks
         if self.direction == "Left":
             newX = lastX - spacing
         elif self.direction == "Right":
@@ -254,13 +255,43 @@ class Game():
             To make playing the game easier, set the x and y to be THRESHOLD
             away from the walls. 
         """
-        THRESHOLD = 15   #sets how close prey can be to borders
+        THRESHOLD = 15 #sets how close prey can be to borders
         #complete the method implementation below
 
-        # x = random.randrange(0 + THRESHOLD, WINDOW_WIDTH - THRESHOLD, 5)
-        # y = random.randrange(0 + THRESHOLD, WINDOW_HEIGHT - THRESHOLD, 5)
-        x = random.randint(0 + THRESHOLD, WINDOW_WIDTH - THRESHOLD)
-        y = random.randint(0 + THRESHOLD, WINDOW_HEIGHT - THRESHOLD)
+        i : int = random.randint(0,2)
+        randomnessInteger : int  = random.randint(0,1)
+
+        x = random.randrange(THRESHOLD, WINDOW_WIDTH - THRESHOLD, 10)
+        y = random.randrange(THRESHOLD, WINDOW_HEIGHT - THRESHOLD, 10)
+
+        # tolarance : int = THRESHOLD + 2
+
+        if randomnessInteger == 1:
+            if i == 2:
+                x = x + i
+                y = y + i
+            elif i == 1:
+                x = x - i
+                y = y - i
+        elif randomnessInteger == 0:
+            if i == 1:
+                x = x + i
+                y = y + i
+            elif i == 2:
+                x = x - i
+                y = y - i
+        
+        if x < 15:
+            x = 15
+
+        if y < 15:
+            y = 15
+
+        # x = random.randint(0 + THRESHOLD, WINDOW_WIDTH - THRESHOLD)
+        # y = random.randint(0 + THRESHOLD, WINDOW_HEIGHT - THRESHOLD)
+        # x = random.randint(15, (WINDOW_WIDTH / 10) - 1) * 10
+        # y = random.randint(15, (WINDOW_HEIGHT / 10) - 1) * 10
+
         self.preyCoordinates = [x,y]
 
         rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
