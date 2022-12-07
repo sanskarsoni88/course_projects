@@ -150,7 +150,6 @@ class Game():
             currentDirection == "Down" and e.keysym == "Up"):
             return
         self.direction = e.keysym
-        # print(self.direction) # Testing
 
     def move(self) -> None:
         """ 
@@ -169,14 +168,12 @@ class Game():
         #complete the method implementation below
         self.snakeCoordinates.append(NewSnakeCoordinates)
 
-        headX = NewSnakeCoordinates[0]
-        preyX = self.preyCoordinates[0]
-        headY = NewSnakeCoordinates[1]
-        preyY = self.preyCoordinates[1]
+        headX : int = NewSnakeCoordinates[0]
+        preyX : int = self.preyCoordinates[0]
+        headY : int = NewSnakeCoordinates[1]
+        preyY : int = self.preyCoordinates[1]
 
         if -2.5 <= headX - preyX <= 2.5 and -2.5 <= headY - preyY <= 2.5: # Specify why the range ("needs to completely overlap") snake size = 15, prey = 10 (i think)
-            # if headX - 5 <= preyX <= headX + 5 and headY - 5 <= preyY  <= headY + 5:
-            # if headX == preyX and headY == preyY:
             self.score += 1
             Score = {"score" : self.score}
             gameQueue.put(Score)
@@ -195,10 +192,13 @@ class Game():
             It is used by the move() method.    
         """
         lastX, lastY = self.snakeCoordinates[-1]
+        #complete the method implementation below
+
         newX : int = lastX
         newY : int = lastY
-        #complete the method implementation below
+
         spacing = 10 # Spacing between blocks
+
         if self.direction == "Left":
             newX = lastX - spacing
         elif self.direction == "Right":
@@ -211,7 +211,6 @@ class Game():
         result = (newX, newY)
         return result
 
-
     def isGameOver(self, snakeCoordinates) -> None:
         """
             This method checks if the game is over by 
@@ -222,9 +221,10 @@ class Game():
         """
        
         x, y = snakeCoordinates # Here, we are getting the new snake head coordinates                                                                            
+        #complete the method implementation below
 
         snakeBody: list = [] # List of coordinates not containing the head
-        bitesItself = False # Indicates whether or not the snake head coordinates match any coordinates from the body
+        bitesItself : bool = False # Indicates whether or not the snake head coordinates match any coordinates from the body
 
         # Create the snake body
         for i in self.snakeCoordinates[:-1]: 
@@ -264,8 +264,6 @@ class Game():
         x = random.randrange(THRESHOLD, WINDOW_WIDTH - THRESHOLD, 10)
         y = random.randrange(THRESHOLD, WINDOW_HEIGHT - THRESHOLD, 10)
 
-        # tolarance : int = THRESHOLD + 2
-
         if randomnessInteger == 1:
             if i == 2:
                 x = x + i
@@ -292,10 +290,10 @@ class Game():
         # x = random.randint(15, (WINDOW_WIDTH / 10) - 1) * 10
         # y = random.randint(15, (WINDOW_HEIGHT / 10) - 1) * 10
 
-        self.preyCoordinates = [x,y]
+        self.preyCoordinates : list = [x, y]
 
         rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
-        print(rectangleCoordinates) # Testing
+        # print(rectangleCoordinates) # Testing
         prey = {"prey" : rectangleCoordinates}
         gameQueue.put(prey)
 
