@@ -1,5 +1,4 @@
-# Group#: G12
-# Student Names: Cullen Jamieson, Sanskar Soni
+
 
 import threading
 import queue        #the thread-safe queue from Python standard library
